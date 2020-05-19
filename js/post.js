@@ -184,7 +184,8 @@ function mdx_shortcode(){
     }
     if($(".mdx-post-cot").length>0){
         for(var i=0;i<document.getElementsByClassName("mdx-post-cot").length;i++){
-            document.getElementsByClassName("mdx-post-cot")[i].id = "mdx-post-"+document.getElementsByClassName("mdx-post-cot")[i].dataset.mdxposturl;
+            const id = "mdx-post-"+document.getElementsByClassName("mdx-post-cot")[i].dataset.mdxposturl;
+            document.getElementsByClassName("mdx-post-cot")[i].id = id;
             $.ajaxSetup({
                 timeout: 15000
             })
@@ -212,7 +213,7 @@ function mdx_shortcode(){
                         img = imgDOM.getAttribute("content");
                     }
                     var imgDiv = "";
-                    if(!document.getElementById("mdx-post-"+url)){
+                    if(!document.getElementById(id)){
                         if(url.substr(url.length-1) === "/"){
                             url = url.substr(0,url.length-1);
                         }else{
@@ -221,9 +222,9 @@ function mdx_shortcode(){
                     }
                     if(img !== ""){
                         imgDiv = '<div class="mdx-post-card-img" style="background-image:url('+img+');"></div>'
-                        document.getElementById("mdx-post-"+url).style.border = "0 solid #dadada";
+                        document.getElementById(id).style.border = "0 solid #dadada";
                     }
-                    document.getElementById("mdx-post-"+url).innerHTML='<div class="mdx-post-main"><a href="'+url+'" ref="nofollow" target="_blank" class="post-link">'+title+'</a><br>'+desc+'<br><br><a href="'+url+'" ref="nofollow" target="_blank" class="arrow-link mdx-github-arrow"><i class="mdui-icon material-icons" title="'+mdx_post_i18n_2+'">&#xe5c8;</i></a></div>'+imgDiv;
+                    document.getElementById(id).innerHTML='<div class="mdx-post-main"><a href="'+url+'" ref="nofollow" target="_blank" class="post-link">'+title+'</a><br>'+desc+'<br><br><a href="'+url+'" ref="nofollow" target="_blank" class="arrow-link mdx-github-arrow"><i class="mdui-icon material-icons" title="'+mdx_post_i18n_2+'">&#xe5c8;</i></a></div>'+imgDiv;
                 }, 
                 error: (function(x){
                     return function(){
@@ -266,7 +267,7 @@ if(nsButton){
 
 var lazyloadImg = document.querySelectorAll("article > *:not(figure) figure:not(.wp-block-image) img, article > figure:not(.wp-block-image) > img");
 if(lazyloadImg.length){
-    for(e of lazyloadImg){
+    for(const e of lazyloadImg){
         e.addEventListener('lazyloaded', function(e){
             setTimeout(() => {
                 var prevDom;
@@ -285,7 +286,7 @@ if(lazyloadImg.length){
 };
 var lazyloadImg2 = document.querySelectorAll("article > figure.wp-block-image img");
 if(lazyloadImg2.length){
-    for(e of lazyloadImg2){
+    for(const e of lazyloadImg2){
         e.addEventListener('lazyloaded', function(e){
             var prevDom;
             if(e.target.previousSibling){
@@ -336,7 +337,7 @@ $(function(){
                 imgUrlEach = $(this).attr('data-src').split("?")[0];
             }
             var imgHref = $(this).parent("a").attr('href').split('.')
-            imgHref.pop();
+            if (imgHref.length > 2) imgHref.pop();
             var imgHrefa = imgHref.join('.') + '-';
             if(imgUrlEach.indexOf(imgHrefa) != -1 || imgUrlEach == $(this).parent("a").attr('href') || imgUrlEach == $(this).parent("a").attr('href')+"-towebp"){
                 $(this).addClass("mdx-img-in-post");

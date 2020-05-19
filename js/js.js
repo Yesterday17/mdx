@@ -91,8 +91,8 @@ function scrollDiff(){
 };
 
 //Scroll To the Top
-document.getElementsByClassName("scrollToTop")[0].addEventListener("click", function(){
-    $("body,html").animate({scrollTop:0},500);
+document.querySelector(".scrollToTop").addEventListener("click", function(){
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }, false);
 
 //Night Styles
@@ -330,7 +330,7 @@ function hideBar(){
  //tap tp top
 document.getElementsByClassName("mdui-typo-headline")[0].addEventListener("click", function(){
     if(mdx_tapToTop==1){
-        $("body,html").animate({scrollTop:0},500);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 })
 
